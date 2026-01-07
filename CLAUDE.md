@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an LLM Engineering book project using Python 3.13. The project uses `uv` for dependency management.
+This is an LLM Engineering book project using Python 3.11.8. The project uses `uv` for dependency management.
 
 ## Development Setup
 
-Python version is managed via `.python-version` (currently 3.13).
+Python version is managed via `.python-version` (currently 3.11.8).
 
 Install dependencies:
 ```bash
