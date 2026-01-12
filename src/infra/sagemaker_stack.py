@@ -18,6 +18,7 @@ class SageMakerStack(Stack):
             ]
         )
         
+        # Grant read/write permissions to the data bucket
         data_bucket.grant_read_write(self.sagemaker_role)
 
         # SageMaker Domain
