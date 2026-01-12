@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src/infra/**/*.py'  # Only Python files in infra
+      - 'app.py'
+      - 'cdk.json'
 
 jobs:
   validate-and-deploy:
