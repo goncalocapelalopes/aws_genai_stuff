@@ -38,13 +38,13 @@ jobs:
             aws-region: ${{ vars.AWS_REGION }}
 
       - name: Validate CDK stacks
-        run: cdk synth # Generates CloudFormation without deploying
+        run: uv run cdk synth # Generates CloudFormation without deploying
         env:
             CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
             CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
 
       - name: Deploy CDK stacks
-        run: cdk deploy StorageStack --require-approval never
+        run: uv run cdk deploy StorageStack --require-approval never
         env:
             CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
             CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
