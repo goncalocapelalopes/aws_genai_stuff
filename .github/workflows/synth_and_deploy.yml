@@ -1,0 +1,50 @@
+name: Synth & Deploy CDK Stacks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
+        with:
+            node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548
+        with:
+            python-version: '3.12'  # Match your .python-version
+      - name: Install uv
+        uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b
+
+      - name: Install Python dependencies
+        run: uv sync
+
+      - name: Install CDK CLI
+        run: npm install -g aws-cdk
+     
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Validate CDK stacks
+        run: cdk synth # Generates CloudFormation without deploying
+        env:
+            CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+            CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
+
+      - name: Deploy CDK stacks
+        run: cdk deploy StorageStack --require-approval never
+        env:
+            CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+            CDK_DEFAULT_REGION: ${{ vars.AWS_REGION }}
