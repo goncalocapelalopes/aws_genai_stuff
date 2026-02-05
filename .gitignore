@@ -12,3 +12,9 @@ wheels/
 # AWS CDK files
 cdk.out/**
 cdk.context.json
+
+# local folder
+local/
+
+# VS Code settings
+.vscode
