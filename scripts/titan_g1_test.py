@@ -98,18 +98,18 @@ def main():
         input_image = base64.b64encode(resized_image_data).decode('utf8')
 
         body = json.dumps({
-            "taskType": "IMAGE_VARIATION",
-            "imageVariationParams": {
-                "text": "Modernize the house, photo-realistic, 8k, hdr",
-                "negativeText": "bad quality, low resolution, cartoon",
-                "images": [input_image],
-		"similarityStrength": 0.7,  # Range: 0.2 to 1.0
+            "taskType": "INPAINTING",
+            "inPaintingParams": {
+                "text": "Remove the cat from the sofa. Your answer must have no cats sitting on the sofa.",
+                "negativeText": "bad quality, low res",
+                "maskPrompt": "Cat on the sofa",
+                "image": input_image,
             },
             "imageGenerationConfig": {
                 "numberOfImages": 1,
                 "height": 512,
                 "width": 512,
-                "cfgScale": 8.0
+                "cfgScale": 10.0
             }
         })
 
